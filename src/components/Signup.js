@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import { useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
@@ -13,7 +14,7 @@ const Signup = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // API CALL for Signup
-        const response = await fetch("http://localhost:5000/api/auth/createuser", {
+        const response = await fetch("http://localhost:9999/api/auth/createuser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,10 +22,8 @@ const Signup = (props) => {
             body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password }),
         });
         const json = await response.json();
-        console.log(json);
         if (json.success) {
             // save the auth token and redirect
-            console.log(json.authToken);
             localStorage.setItem('token', json.authToken);
             navigate('/');
             props.showAlert("Account created Successfully!", 'success');

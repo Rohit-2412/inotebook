@@ -1,8 +1,8 @@
-
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import noteContext from "../context/notes/noteContext"
-import Noteitem from './NoteItem';
+
 import AddNote from './AddNote';
+import Noteitem from './NoteItem';
+import noteContext from "../context/notes/noteContext"
 import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
@@ -38,7 +38,6 @@ const Notes = (props) => {
     const onChange = (e) => {
         setNote({ ...note, [e.target.name]: e.target.value })
     }
-
     return (
         <>
             <AddNote showAlert={props.showAlert} />
@@ -83,10 +82,11 @@ const Notes = (props) => {
                 <div className="container">
                     <h5 className='text-muted'> {notes.length === 0 && 'No notes to display'}</h5>
                 </div>
-
-                {notes.map((note) => {
-                    return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
-                })}
+                <div className="grid row-md-4 d-flex gap-3">
+                    {notes.map((note) => {
+                        return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
+                    })}
+                </div>
             </div>
         </>
     )

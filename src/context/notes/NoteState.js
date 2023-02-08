@@ -1,9 +1,9 @@
-import React from "react";
 import NoteContext from "./noteContext";
+import React from "react";
 import { useState } from "react";
 
 const NoteState = (props) => {
-    const host = "http://localhost:5000";
+    const host = "http://localhost:9999";
     const notesInitial = []
     const [notes, setNotes] = useState(notesInitial);
 
@@ -19,7 +19,6 @@ const NoteState = (props) => {
             }
         });
         const json = await response.json();
-        console.log(json);
         setNotes(json);
     }
 
@@ -36,8 +35,6 @@ const NoteState = (props) => {
             body: JSON.stringify({ title, description, tag })
         });
         const note = await response.json();
-        console.log(note);
-        console.log("Adding a new note")
         setNotes(notes.concat(note));
     }
 
@@ -53,19 +50,17 @@ const NoteState = (props) => {
             }
         });
         const json = await response.json();
-        console.log(json);
         setNotes(json);
 
-        console.log("Deleting the note with id: " + id)
+        // console.log("Deleting the note with id: " + id)
         const newNotes = notes.filter((note) => { return note._id !== id })
         setNotes(newNotes);
     }
 
     // Edit a note
     const editNote = async (id, title, description, tag) => {
-        console.log("Updating note. . .")
         // API CALL
-        const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+        await fetch(`${host}/api/notes/updatenote/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -73,10 +68,9 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({ title, description, tag })
         });
-        const json = await response.json();
-        console.log(json)
 
         let newNotes = JSON.parse(JSON.stringify(notes));
+
         // Logic to edit in client
         for (let index = 0; index < newNotes.length; index++) {
             const element = newNotes[index];
